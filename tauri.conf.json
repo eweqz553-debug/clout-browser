@@ -1,11 +1,12 @@
 {
   "build": {
-    "distDir": ".",
-    "devPath": "index.html"
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "frontendDist": "../"
   },
   "package": {
-    "productName": "WORLD",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "productName": "clout-browser"
   },
   "tauri": {
     "allowlist": {
@@ -13,20 +14,23 @@
     },
     "bundle": {
       "active": true,
-      "targets": "all",
-      "identifier": "com.world.browser",
+      "targets": ["msi", "nsis"],
+      "identifier": "com.clout.browser",
       "icon": [
-        "logo.png"
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
       ]
     },
-    "window": [
+    "windows": [
       {
-        "title": "WORLD Browser",
-        "width": 1200,
-        "height": 800,
+        "title": "Clout Browser",
+        "width": 1000,
+        "height": 700,
         "resizable": true,
-        "fullscreen": false,
-        "decorations": true
+        "fullscreen": false
       }
     ]
   }
