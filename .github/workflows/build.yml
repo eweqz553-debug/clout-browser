@@ -1,22 +1,30 @@
-name: Build WORLD Browser
-on:
-  push:
-    branches: [ main ]
+name: Build App
+on: [push, pull_request]
 
 jobs:
-  build:
+  build-tauri:
     runs-on: windows-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: setup node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install Dependencies
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: install dependencies
         run: npm install
 
-      - name: Build Portable EXE
-        run: npx electron-builder --win
+      - name: build tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: 'Clout Browser v__VERSION__'
+          releaseBody: 'Автоматическая сборка браузера CLOUT.'
+          releaseDraft: true
+          prerelease: false
