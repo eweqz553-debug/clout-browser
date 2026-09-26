@@ -1,25 +1,14 @@
 {
-  "name": "world-browser",
+  "name": "clout-browser",
   "version": "1.0.0",
+  "description": "An AI agent powered by DeepSeek",
   "main": "main.js",
   "scripts": {
-    "build": "electron-builder"
+    "tauri": "tauri",
+    "build": "echo 'No frontend build needed'"
   },
-  "dependencies": {
-    "electron": "^30.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "electron-builder": "^24.13.3"
-  },
-  "build": {
-    "appId": "com.world.browser",
-    "productName": "WORLD",
-    "win": {
-      "target": "portable"
-    },
-    "files": [
-      "index.html",
-      "main.js"
-    ]
+    "@tauri-apps/cli": "^1.5.0"
   }
 }
