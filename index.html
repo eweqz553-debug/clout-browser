@@ -1370,14 +1370,14 @@ alt="WORLD"
 <input
 
 class="search"
-
+id="ai-input"
 placeholder="Search WORLD"
 
 
-
+onkeydown="if(event.key === 'Enter') askMyAI()"
 >
 
-
+<div id="ai-output" style="color: #ffffff; margin: 30px auto; font-family: monospace; text-align: left; max-width: 600px; font-size: 15px; line-height: 1.6; opacity: 0.9; letter-spacing: 1px;"></div>
 <div class="tagline">
 
 explore correctly
@@ -1911,6 +1911,46 @@ document.body.style.opacity =
 
 </script>
 
+<script>
+async function askMyAI() {
+    let inputField = document.getElementById('ai-input');
+    let outputField = document.getElementById('ai-output');
+    let userText = inputField.value.trim();
+    
+    if (!userText) return; 
+    
+    outputField.innerHTML = "<span style='opacity: 0.5;'>CLOUT AI: Обработка запроса...</span>";
+    inputField.value = ""; 
+
+    try {
+        let response = await fetch('https://deepseek.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ТВОЙ_СЕКРЕТНЫЙ_КЛЮЧ_API' 
+            },
+            body: JSON.stringify({
+                model: "deepseek-chat",
+                messages: [
+                    {
+                        role: "system", 
+                        content: "Ты — встроенный ИИ-ассистент приватного браузера CLOUT. Отвечай коротко, по делу, в минималистичном стиле."
+                    },
+                    {role: "user", content: userText}
+                ]
+            })
+        });
+        
+        let data = await response.json();
+        let aiAnswer = data.choices.message.content;
+        
+        outputField.innerHTML = "<strong style='color: #fff;'>CLOUT AI:</strong><br>" + aiAnswer;
+        
+    } catch (error) {
+        outputField.innerHTML = "<span style='color: #ff5555;'>Ошибка CLOUT SYSTEM. Проверьте подключение к сети.</span>";
+    }
+}
+</script>
 
 </body>
 
