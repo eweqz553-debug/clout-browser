@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORLD — Private Browser</title>
+
+
+<style>
+
+
+/* =====================================================
+   WORLD MONOCHROME SYSTEM
+===================================================== */
+
+
+:root{
+
+    --background:#0a0a0a;
+
+    --glass:
+    rgba(255,255,255,.045);
+
+    --border:
+    rgba(255,255,255,.12);
+
+    --white:#ffffff;
+
+    --gray:#888888;
+
+}
+
+
+
+
+
+*{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:
+
+    "Inter",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+}
+
+
+
+
+
+html,
+body{
+
+
+    width:100%;
+
+    height:100%;
+
+
+    overflow:hidden;
+
+
+    background:#0a0a0a;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+::selection{
+
+
+    background:white;
+
+    color:black;
+
+
+}
+
+
+
+
+
+
+
+/* =====================================================
+   COSMIC DUST BACKGROUND
+===================================================== */
+
+
+#particles{
+
+
+    position:fixed;
+
+
+    inset:0;
+
+
+    overflow:hidden;
+
+
+    z-index:0;
+
+
+    pointer-events:none;
+
+
+}
+
+
+
+
+
+.particle{
+
+
+    position:absolute;
+
+
+    background:white;
+
+
+    border-radius:50%;
+
+
+    opacity:.25;
+
+
+    filter:blur(.5px);
+
+
+
+    animation:
+
+
+    drift linear infinite;
+
+
+}
+
+
+
+
+
+@keyframes drift{
+
+
+    from{
+
+
+        transform:
+
+
+        translateY(120vh);
+
+
+    }
+
+
+
+    to{
+
+
+        transform:
+
+
+        translateY(-20vh);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   MAIN BROWSER
+===================================================== */
+
+
+.browser{
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    width:100%;
+
+
+    height:100%;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+
+.header{
+
+
+    height:74px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:15px;
+
+
+    padding:0 24px;
+
+
+
+    background:
+
+
+    rgba(10,10,10,.78);
+
+
+
+    backdrop-filter:
+
+
+    blur(22px);
+
+
+
+    border-bottom:
+
+
+    1px solid rgba(255,255,255,.08);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   NAVIGATION BUTTONS
+===================================================== */
+
+
+.navigation{
+
+
+    display:flex;
+
+
+    gap:9px;
+
+
+}
+
+
+
+
+
+.nav-button{
+
+
+    width:38px;
+
+
+    height:38px;
+
+
+    border-radius:50%;
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.08);
+
+
+
+    background:
+
+
+    rgba(255,255,255,.04);
+
+
+
+    color:white;
+
+
+
+    cursor:pointer;
+
+
+    font-size:16px;
+
+
+    transition:.2s ease;
+
+
+}
+
+
+
+
+
+.nav-button:hover{
+
+
+    background:
+
+
+    rgba(255,255,255,.14);
+
+
+
+    border-color:
+
+
+    rgba(255,255,255,.4);
+
+
+
+    box-shadow:
+
+
+    0 0 18px rgba(255,255,255,.35);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   ADDRESS
+===================================================== */
+
+
+.address-wrapper{
+
+
+    flex:1;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+}
+
+
+
+
+
+.address{
+
+
+    width:100%;
+
+
+    max-width:760px;
+
+
+
+    height:44px;
+
+
+
+    border-radius:24px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.05);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.12);
+
+
+
+    color:white;
+
+
+
+    outline:none;
+
+
+
+    text-align:center;
+
+
+
+    font-size:15px;
+
+
+
+    transition:.2s ease;
+
+
+
+}
+
+
+
+
+
+.address:hover{
+
+
+    background:
+
+
+    rgba(255,255,255,.08);
+
+
+}
+
+
+
+
+.address:focus{
+
+
+    border-color:white;
+
+
+
+    box-shadow:
+
+
+    0 0 18px rgba(255,255,255,.35);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   HEADER CONTROLS
+===================================================== */
+
+
+.controls{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:10px;
+
+
+}
+
+
+
+
+
+.control-button{
+
+
+    width:36px;
+
+
+    height:36px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    background:
+
+
+    rgba(255,255,255,.05);
+
+
+
+    color:white;
+
+
+
+    cursor:pointer;
+
+
+
+    transition:.2s ease;
+
+
+
+}
+
+
+
+
+
+.control-button:hover{
+
+
+    background:
+
+
+    rgba(255,255,255,.15);
+
+
+
+    box-shadow:
+
+
+    0 0 18px rgba(255,255,255,.4);
+
+
+
+}
+
+
+
+
+
+
+.avatar{
+
+
+    width:38px;
+
+
+    height:38px;
+
+
+    border-radius:50%;
+
+
+    background:
+
+
+    linear-gradient(
+
+    145deg,
+
+    #777,
+
+    #222
+
+    );
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.25);
+
+
+
+    cursor:pointer;
+
+
+
+    transition:.2s ease;
+
+
+
+}
+
+
+
+
+
+.avatar:hover{
+
+
+    filter:
+
+
+    brightness(1.35);
+
+
+
+    box-shadow:
+
+
+    0 0 22px rgba(255,255,255,.55);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+
+.summary-wrapper{
+
+
+    position:relative;
+
+
+}
+
+
+
+
+
+.summary-button{
+
+
+    background:none;
+
+
+    border:none;
+
+
+
+    color:#aaa;
+
+
+
+    cursor:pointer;
+
+
+
+    font-size:14px;
+
+
+
+    padding:10px 15px;
+
+
+
+    transition:.2s ease;
+
+
+}
+
+
+
+
+
+.summary-button:hover{
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+
+.summary-menu{
+
+
+    position:absolute;
+
+
+    right:0;
+
+
+    top:50px;
+
+
+
+    width:260px;
+
+
+
+    padding:20px;
+
+
+
+    background:
+
+
+    rgba(20,20,20,.85);
+
+
+
+    backdrop-filter:
+
+
+    blur(25px);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.15);
+
+
+
+    border-radius:16px;
+
+
+
+    opacity:0;
+
+
+
+    transform:
+
+
+    translateY(-10px);
+
+
+
+    pointer-events:none;
+
+
+
+    transition:.3s ease;
+
+
+
+}
+
+
+
+
+
+.summary-menu.active{
+
+
+    opacity:1;
+
+
+
+    transform:
+
+
+    translateY(0);
+
+
+
+    pointer-events:auto;
+
+
+
+}
+
+
+
+
+
+.summary-menu ul{
+
+
+    list-style:none;
+
+
+}
+
+
+
+
+.summary-menu li{
+
+
+    color:#aaa;
+
+
+
+    padding:10px 0;
+
+
+
+    border-bottom:
+
+
+    1px solid rgba(255,255,255,.06);
+
+
+
+}
+
+
+
+
+
+.open-link{
+
+
+    color:#aaa;
+
+
+
+    cursor:pointer;
+
+
+
+    transition:.2s ease;
+
+
+
+}
+
+
+
+
+
+.open-link:hover{
+
+
+    color:white;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   MAIN AREA
+===================================================== */
+
+
+.main{
+
+
+    flex:1;
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    position:relative;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+
+.hero{
+
+
+    position:relative;
+
+
+    z-index:3;
+
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    align-items:center;
+
+
+
+}
+
+
+
+
+
+
+
+.logo{
+
+
+    width:170px;
+
+
+
+    height:170px;
+
+
+
+    border-radius:50%;
+
+
+
+    object-fit:cover;
+
+
+
+    filter:
+
+
+    grayscale(100%)
+
+
+    brightness(1.2);
+
+
+
+    box-shadow:
+
+
+    0 0 45px rgba(255,255,255,.18);
+
+
+
+    margin-bottom:40px;
+
+
+
+    animation:none;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+.search{
+
+
+    width:560px;
+
+
+    max-width:80vw;
+
+
+
+    height:58px;
+
+
+
+    border-radius:30px;
+
+
+
+    background:
+
+
+    rgba(255,255,255,.05);
+
+
+
+    border:
+
+
+    1px solid rgba(255,255,255,.12);
+
+
+
+    color:white;
+
+
+
+    outline:none;
+
+
+
+    text-align:center;
+
+
+
+    font-size:18px;
+
+
+
+    transition:.2s ease;
+
+
+
+}
+
+
+
+
+
+.search:hover{
+
+
+    background:
+
+
+    rgba(255,255,255,.08);
+
+
+
+}
+
+
+
+
+
+.search:focus{
+
+
+    border-color:white;
+
+
+
+    box-shadow:
+
+
+    0 0 20px rgba(255,255,255,.3);
+
+
+
+}
+
+
+
+
+
+
+.search::placeholder{
+
+
+    color:#777;
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================================
+   FINAL BRAND SLOGAN
+===================================================== */
+
+
+.tagline{
+
+
+    margin-top:34px;
+
+
+    font-size:14px;
+
+
+
+    font-weight:300;
+
+
+
+    letter-spacing:14px;
+
+
+
+    color:
+
+
+    rgba(255,255,255,.55);
+
+
+
+    text-transform:lowercase;
+
+
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="particles"></div>
+
+
+<div class="browser">
+
+
+<header class="header">
+
+
+<div class="navigation">
+
+
+<button class="nav-button">
+←
+</button>
+
+
+<button class="nav-button">
+→
+</button>
+
+
+<button class="nav-button">
+↻
+</button>
+
+
+<button class="nav-button">
+⌂
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="address-wrapper">
+
+
+<input
+
+class="address"
+
+value="world://private-search"
+
+>
+
+
+</div>
+
+
+
+
+
+<div class="controls">
+
+
+<button class="control-button">
+□
+</button>
+
+
+<button class="control-button">
+↓
+</button>
+
+
+<div class="avatar"></div>
+
+
+</div>
+
+
+
+
+
+<div class="summary-wrapper">
+
+
+<button
+
+class="summary-button"
+
+id="summaryButton"
+
+>
+
+Summary
+
+</button>
+
+
+
+<div
+
+class="summary-menu"
+
+id="summaryMenu"
+
+>
+
+
+<ul>
+
+
+<li>
+• VPN -
+<span class="open-link">
+open
+</span>
+</li>
+
+
+<li>
+• AI -
+<span class="open-link">
+open
+</span>
+</li>
+
+
+<li>
+• Wallet -
+<span class="open-link">
+open
+</span>
+</li>
+
+
+<li>
+• Extensions -
+<span class="open-link">
+open
+</span>
+</li>
+
+
+<li>
+• Maps -
+<span class="open-link">
+open
+</span>
+</li>
+
+
+<li>
+• Mail -
+<span class="open-link">
+open
+</span>
+</li>
+
+
+</ul>
+
+
+</div>
+
+
+</div>
+
+
+
+</header>
+
+
+
+
+<main class="main">
+
+
+<section class="hero">
+
+
+
+<img
+
+class="logo"
+
+src="https://i.ibb.co/j95JCJ5L/image.webp"
+
+alt="WORLD"
+
+
+
+>
+
+
+<input
+
+class="search"
+
+placeholder="Search WORLD"
+
+
+
+>
+
+
+<div class="tagline">
+
+explore correctly
+
+</div>
+
+
+
+</section>
+
+
+
+</main>
+
+
+
+</div>
+<script>
+
+
+/* =====================================================
+   WORLD COSMIC DUST ENGINE
+===================================================== */
+
+
+const particlesContainer =
+document.getElementById("particles");
+
+
+
+for(let i = 0; i < 140; i++){
+
+
+    const particle =
+    document.createElement("div");
+
+
+
+    particle.className =
+    "particle";
+
+
+
+    const size =
+    Math.random() * 3 + 1;
+
+
+
+    particle.style.width =
+    size + "px";
+
+
+    particle.style.height =
+    size + "px";
+
+
+
+    particle.style.left =
+    Math.random() * 100 + "%";
+
+
+
+    particle.style.top =
+    Math.random() * 100 + "%";
+
+
+
+    particle.style.animationDuration =
+    (35 + Math.random() * 70) + "s";
+
+
+
+    particle.style.animationDelay =
+    (-Math.random() * 60) + "s";
+
+
+
+    particle.style.opacity =
+    Math.random() * .35 + .1;
+
+
+
+    particlesContainer.appendChild(
+    particle
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   PARTICLE CURSOR RESPONSE
+===================================================== */
+
+
+document.addEventListener(
+"mousemove",
+(event)=>{
+
+
+    const x =
+    event.clientX /
+    window.innerWidth -
+    .5;
+
+
+
+    const y =
+    event.clientY /
+    window.innerHeight -
+    .5;
+
+
+
+    document
+    .querySelectorAll(".particle")
+    .forEach(
+    (particle,index)=>{
+
+
+        const intensity =
+        (index % 6) + 1;
+
+
+
+        particle.style.marginLeft =
+        (x * intensity * 8)
+        + "px";
+
+
+
+        particle.style.marginTop =
+        (y * intensity * 8)
+        + "px";
+
+
+    });
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   SUMMARY DROPDOWN
+===================================================== */
+
+
+const summaryButton =
+document.getElementById(
+"summaryButton"
+);
+
+
+
+const summaryMenu =
+document.getElementById(
+"summaryMenu"
+);
+
+
+
+summaryButton.addEventListener(
+"click",
+(event)=>{
+
+
+    event.stopPropagation();
+
+
+
+    summaryMenu.classList.toggle(
+    "active"
+    );
+
+
+});
+
+
+
+
+
+summaryMenu.addEventListener(
+"click",
+(event)=>{
+
+
+    event.stopPropagation();
+
+
+});
+
+
+
+
+
+document.addEventListener(
+"click",
+()=>{
+
+
+    summaryMenu.classList.remove(
+    "active"
+    );
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   OPEN LINKS
+===================================================== */
+
+
+document
+.querySelectorAll(".open-link")
+.forEach(
+(link)=>{
+
+
+    link.addEventListener(
+    "click",
+    ()=>{
+
+
+        link.style.color =
+        "#ffffff";
+
+
+
+        console.log(
+        "WORLD service opened:",
+        link.parentElement.textContent
+        );
+
+
+
+        setTimeout(()=>{
+
+
+            link.style.color =
+            "";
+
+
+        },300);
+
+
+
+    });
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   BUTTON PRESS ANIMATION
+===================================================== */
+
+
+document
+.querySelectorAll(
+".nav-button, .control-button"
+)
+.forEach(
+(button)=>{
+
+
+button.addEventListener(
+"mousedown",
+()=>{
+
+
+    button.style.transform =
+    "scale(.92)";
+
+
+});
+
+
+
+
+button.addEventListener(
+"mouseup",
+()=>{
+
+
+    button.style.transform =
+    "scale(1)";
+
+
+});
+
+
+
+
+button.addEventListener(
+"mouseleave",
+()=>{
+
+
+    button.style.transform =
+    "scale(1)";
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   ADDRESS BAR ENGINE
+===================================================== */
+
+
+const address =
+document.querySelector(
+".address"
+);
+
+
+
+address.addEventListener(
+"keydown",
+(event)=>{
+
+
+    if(event.key === "Enter"){
+
+
+
+        console.log(
+
+        "Navigation to:",
+
+        address.value
+
+        );
+
+
+
+        address.blur();
+
+
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   SEARCH ENGINE PLACEHOLDER LOGIC
+===================================================== */
+
+
+const search =
+document.querySelector(
+".search"
+);
+
+
+
+search.addEventListener(
+"keydown",
+(event)=>{
+
+
+    if(event.key === "Enter"){
+
+
+        console.log(
+
+        "WORLD Search:",
+
+        search.value
+
+        );
+
+
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   CONTROL BUTTON ACTIONS
+===================================================== */
+
+
+const controls =
+document
+.querySelectorAll(
+".control-button"
+);
+
+
+
+controls.forEach(
+(button,index)=>{
+
+
+button.addEventListener(
+"click",
+()=>{
+
+
+const actions = [
+
+"Extensions opened",
+
+"Downloads opened"
+
+];
+
+
+
+console.log(
+actions[index]
+);
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+
+document
+.querySelector(".avatar")
+.addEventListener(
+"click",
+()=>{
+
+
+console.log(
+"User profile opened"
+);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   SMOOTH LOAD
+===================================================== */
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+document.body.style.opacity =
+"1";
+
+
+
+});
+
+
+
+</script>
+
+
+</body>
+
+</html>
