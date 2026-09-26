@@ -1,0 +1,33 @@
+{
+  "build": {
+    "distDir": ".",
+    "devPath": "index.html"
+  },
+  "package": {
+    "productName": "WORLD",
+    "version": "1.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": true
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.world.browser",
+      "icon": [
+        "logo.png"
+      ]
+    },
+    "window": [
+      {
+        "title": "WORLD Browser",
+        "width": 1200,
+        "height": 800,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true
+      }
+    ]
+  }
+}
