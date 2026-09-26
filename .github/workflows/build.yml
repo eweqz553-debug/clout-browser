@@ -23,8 +23,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v__VERSION__
-          releaseName: 'Clout Browser v__VERSION__'
-          releaseBody: 'Автоматическая сборка браузера CLOUT.'
+          tagName: v1.0.0
+          releaseName: 'Clout Browser v1.0.0'
+          releaseBody: 'Автоматическая сборка приватного браузера CLOUT.'
           releaseDraft: true
           prerelease: false
